@@ -1,0 +1,6 @@
+{
+  "name": "Cozy Select - Korean & Y2K Fashion E-Commerce",
+  "description": "Full-system Korean & Y2K fashion e-commerce web application with real-time catalog, stock management, shopping cart, coupon calculation, multi-step checkout with mock QR PromptPay and Credit Card payment, order tracking, user profiles, wishlist, and full Admin control panel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
