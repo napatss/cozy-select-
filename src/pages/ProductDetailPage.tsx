@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { ProductColor, Product } from '../types';
+import { ProductColor, Product, ProductCategory } from '../types';
 import { ProductCard } from '../components/ProductCard';
 import { 
   Star, Heart, ShoppingBag, Truck, ShieldCheck, 
@@ -105,7 +105,7 @@ export const ProductDetailPage: React.FC = () => {
           <ChevronRight className="w-3.5 h-3.5" />
           <button 
             onClick={() => {
-              setActiveCategory(product.category);
+              setActiveCategory(product.category as ProductCategory);
               setActiveView('products');
             }} 
             className="hover:text-pink-500 transition-colors capitalize"
@@ -467,23 +467,10 @@ export const ProductDetailPage: React.FC = () => {
                   <p>{language === 'th' ? product.descriptionTh : product.descriptionEn}</p>
                 </div>
 
-                {product.features && (
-                  <div>
-                    <h4 className="font-bold text-sm text-slate-900 dark:text-white mb-2">
-                      {language === 'th' ? 'จุดเด่นของดีไซน์' : 'Design Highlights'}
-                    </h4>
-                    <ul className="list-disc pl-5 space-y-1 text-xs sm:text-sm">
-                      {product.features.map((f, i) => (
-                        <li key={i}>{f}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {product.material && (
-                  <div className="p-4 rounded-2xl bg-rose-50/50 dark:bg-slate-800 border border-pink-100 dark:border-slate-700">
-                    <span className="font-bold text-pink-600">{language === 'th' ? 'เนื้อผ้า (Material): ' : 'Material: '}</span>
-                    <span>{product.material}</span>
+                {(language === 'th' ? product.materialTh : product.materialEn) && (
+                  <div className="p-4 rounded-2xl bg-pink-50 dark:bg-slate-800 border border-pink-100 dark:border-slate-700">
+                    <span className="font-bold text-pink-900 dark:text-pink-200">{language === 'th' ? 'เนื้อผ้า (Material): ' : 'Material: '}</span>
+                    <span>{language === 'th' ? product.materialTh : product.materialEn}</span>
                   </div>
                 )}
               </div>
@@ -491,15 +478,6 @@ export const ProductDetailPage: React.FC = () => {
 
             {activeTab === 'size' && (
               <div className="space-y-4">
-                <div className="text-center mb-4">
-                  <h3 className="font-bold text-base text-slate-900 dark:text-white">
-                    {language === 'th' ? 'ตารางขนาดสินค้า (Size Guide - Inches)' : 'Size Guide (Inches)'}
-                  </h3>
-                  <p className="text-xs text-slate-400">
-                    {language === 'th' ? '*ขนาดอาจมีความคลาดเคลื่อน 0.5 - 1 นิ้วจากการตัดเย็บ' : '*Measurements may vary 0.5 - 1 inch'}
-                  </p>
-                </div>
-
                 {product.sizeChart && product.sizeChart.length > 0 ? (
                   <div className="rounded-2xl border border-pink-100 dark:border-slate-700 overflow-hidden shadow-xs">
                     <table className="w-full text-center text-xs sm:text-sm">
@@ -537,7 +515,7 @@ export const ProductDetailPage: React.FC = () => {
                   {language === 'th' ? 'คำแนะนำการซักและดูแลรักษา' : 'Care Instructions'}
                 </h3>
                 <ul className="space-y-2 list-disc pl-5">
-                  <li>{product.careInstructions || (language === 'th' ? 'ควรซักมือด้วยน้ำเย็น หรือใส่ถุงถนอมผ้าเมื่อซักเครื่อง' : 'Hand wash cold or gentle cycle in laundry bag')}</li>
+                  <li>{(language === 'th' ? product.careInstructionsTh : product.careInstructionsEn) || (language === 'th' ? 'ควรซักมือด้วยน้ำเย็น หรือใส่ถุงถนอมผ้าเมื่อซักเครื่อง' : 'Hand wash cold or gentle cycle in laundry bag')}</li>
                   <li>{language === 'th' ? 'หลีกเลี่ยงการใช้น้ำยาฟอกขาว' : 'Do not bleach'}</li>
                   <li>{language === 'th' ? 'ควรรีดด้วยความร้อนต่ำ และกลับด้านรีดเพื่อถนอมลายสกรีน' : 'Iron inside-out on low heat'}</li>
                   <li>{language === 'th' ? 'ตากในที่ร่มมีลมโกรก เพื่อให้สีสดใสยาวนาน' : 'Line dry in shade to preserve color vibrancy'}</li>
@@ -575,7 +553,7 @@ export const ProductDetailPage: React.FC = () => {
               </div>
               <button
                 onClick={() => {
-                  setActiveCategory(product.category);
+                  setActiveCategory(product.category as ProductCategory);
                   setActiveView('products');
                 }}
                 className="text-xs sm:text-sm font-bold text-pink-500 hover:text-pink-600"
